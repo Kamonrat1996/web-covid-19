@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- jQuery & InputMask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <!-- ส่วนนี้คือ section เปิดหน้าเว็บไซต์ มีหัวเรื่อง เนื้อหาสั้น และปุ่ม 2 ปุ่มอยู่ตรงกลาง responsive ได้ -->
+    <main>
+        <section class="py-5 container">
+            <div class="row py-lg-5">
+                <div class="col-lg-10 col-md-8 mx-auto">
+                    <div class="card">
+                        <div class="card-header text-center text-dark fw-bold" style="background-color: aquamarine;">
+                            <h2>กรุณาให้ข้อมูลตามความเป็นจริงเพื่อประโยชน์ของท่าน</h2>
+                        </div>
+                        <div class="card-body">
+                            <form action="check_data.html" name="main_form" method="post">
+
+                                <h2 class="card-title">ข้อมูลส่วนตัว</h2>
+
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">ชื่อ</label>
+                                    <input type="text" class="form-control" id="name" placeholder="">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="surname" class="form-label">นามสกุล</label>
+                                    <input type="text" class="form-control" id="surname" placeholder="">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="tel" class="form-label">เบอร์โทร</label>
+                                    <input type="text" class="form-control" id="tel" placeholder="">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="birth" class="form-label">วันเกิด</label>
+                                    <input type="date" class="form-control" id="birth" placeholder="">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="citizen_id" class="form-label">รหัสบัตรประชาชน</label>
+                                    <input type="text" class="form-control" id="citizen_id" placeholder="">
+                                </div>
+
+                                <h2 class="card-title">อาการ</h2>
+                                <h4>ท่านตัวร้อนหรือไม่</h4>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="heat" id="heat1" value="yes">
+                                        <label class="form-check-label" for="heat1">ใช่</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="heat" id="heat2" value="no">
+                                        <label class="form-check-label" for="heat2">ไม่ใช่</label>
+                                    </div>
+                                </div>
+
+                                <h2 class="card-title">ประวัติเสี่ยง</h2>
+                                <h4>ท่านได้พบคนที่เป็น Covid-19 หรือไม่</h4>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="meet_covid" id="meet_covid1" value="yes">
+                                        <label class="form-check-label" for="meet_covid1">ใช่</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="meet_covid" id="meet_covid2" value="no">
+                                        <label class="form-check-label" for="meet_covid2">ไม่ใช่</label>
+                                    </div>
+                                </div>
+
+                                <input type="submit" onclick="return validate();" class="btn btn-primary" value="ประเมินความเสี่ยงและส่งข้อมูล">
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            $(document).ready(function() {
+                $("#tel").inputmask("999-999-9999");
+                $("#citizen_id").inputmask("9-9999-99999-99-9");
+            });
+
+            function validate() {
+                let check = 0; // รีเซ็ตทุกครั้งเมื่อกดปุ่ม
+
+                $(".error-text").remove(); // ลบ error เดิมก่อน
+
+                $("input[type='text'], input[type='date']").each(function() {
+                    if ($(this).val().trim() === "") {
+                        check++; // นับว่ามี error
+                        $(this).after('<span class="error-text text-danger">**กรุณากรอกข้อมูล**</span>');
+                    }
+                });
+
+                if (check > 0) {
+                    return false; // เจอช่องว่าง -> หยุด submit
+                } else {
+                    return true; // ทุกช่องครบ -> ส่งข้อมูล
+                }
+            }
+        </script>
+    </main>
+    </div>
+    </div>
+
+    </div>
+    </div>
+
+    </section>
+    </main>
+
+
+    <!-- ส่วนของ nav bar อยู่ข้างล่างเว็บ -->
+    <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-dark ">
+        <div class="container-fluid">
+
+            <!-- Toggle button ขวา สำหรับหน้าจอเล็ก -->
+            <a class="navbar-brand" href="#"></a>
+            <button class="navbar-toggler order-lg-2 ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- เมนูกลาง สำหรับหน้าจอใหญ่-->
+            <div class="collapse navbar-collapse order-lg-1 justify-content-center" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="#">หน้าแรก</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">ติดต่อโรงพยาบาล</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">เกี่ยวกับเว็บไซต์</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">เข้าสู่ระบบ</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+
+</body>
+
+</html>
